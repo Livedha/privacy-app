@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PrivacyGuard</title>
+
+    <!-- 🔗 LINK CSS HERE -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>🔐 PrivacyGuard</header>
+
+<div class="container">
+
+    <div class="card">
+        <h3>📱 App Scanner</h3>
+        <button onclick="scanApps()">Scan Apps</button>
+        <div id="appList"></div>
+    </div>
+
+    <div class="card">
+        <h3>📊 Privacy Dashboard</h3>
+        <p>Total Apps: <span id="totalApps">0</span></p>
+        <p>High Risk: <span id="highRisk">0</span></p>
+        <p>Medium Risk: <span id="mediumRisk">0</span></p>
+        <p>Low Risk: <span id="lowRisk">0</span></p>
+    </div>
+
+    <div class="card">
+        <h3>🚨 Alerts</h3>
+        <ul id="alerts"></ul>
+    </div>
+
+    <div class="card">
+        <h3>🔐 Secure Vault</h3>
+        <input type="password" id="vaultPass" placeholder="Enter Password">
+        <button onclick="unlockVault()">Unlock</button>
+
+        <div id="vaultContent" class="hidden">
+            <textarea placeholder="Store secure notes..."></textarea>
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔗 LINK JAVASCRIPT HERE (VERY IMPORTANT: at bottom) -->
+<script src="script.js"></script>
+
+</body>
+</html>
