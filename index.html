@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data Privacy App</title>
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    margin: 0;
+}
+
+header {
+    background: #1e293b;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.container {
+    padding: 20px;
+}
+
+.card {
+    background: #1e293b;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    background: #22c55e;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #16a34a;
+}
+
+.high { color: red; }
+.medium { color: orange; }
+.low { color: lightgreen; }
+
+input {
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<header>🔐 PrivacyGuard</header>
+
+<div class="container">
+
+    <div class="card">
+        <h3>📱 App Scanner</h3>
+        <button onclick="scanApps()">Scan Apps</button>
+        <div id="appList"></div>
+    </div>
+
+    <div class="card">
+        <h3>📊 Privacy Dashboard</h3>
+        <p>Total Apps: <span id="totalApps">0</span></p>
+        <p>High Risk: <span id="highRisk">0</span></p>
+        <p>Medium Risk: <span id="mediumRisk">0</span></p>
+        <p>Low Risk: <span id="lowRisk">0</span></p>
+    </div>
+
+    <div class="card">
+        <h3>🚨 Alerts</h3>
+        <ul id="alerts"></ul>
+    </div>
+
+    <div class="card">
+        <h3>🔐 Secure Vault</h3>
+        <input type="password" id="vaultPass" placeholder="Enter Password">
+        <button onclick="unlockVault()">Unlock</button>
+
+        <div id="vaultContent" class="hidden">
+            <textarea placeholder="Store secure notes..." style="width:100%; height:100px;"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<script>
+let apps = [
+    {name: "WhatsApp", camera: true, mic: true, location: true},
+    {name: "Instagram", camera: true, mic: true, location: false},
+    {name: "Flashlight", camera: false, mic: false, location: true},
+    {name: "Calculator", camera: false, mic: false, location: false}
+];
+
+function calculateRisk(app) {
+    let score = 0;
+    if (app.camera) score++;
+    if (app.mic) score++;
+    if (app.location) score++;
+
+    if (score >= 3) return "High";
+    if (score == 2) return "Medium";
+    return "Low";
+}
+
+function scanApps() {
+    let list = document.getElementById("appList");
+    list.innerHTML = "";
+
+    let high = 0, medium = 0, low = 0;
+
+    apps.forEach(app => {
+        let risk = calculateRisk(app);
+
+        if (risk === "High") high++;
+        else if (risk === "Medium") medium++;
+        else low++;
+
+        let div = document.createElement("div");
+        div.innerHTML = `
+            <p><b>${app.name}</b> - 
+            <span class="${risk.toLowerCase()}">${risk} Risk</span></p>
+        `;
+
+        list.appendChild(div);
+
+        if (risk === "High") {
+            addAlert(app.name + " is accessing sensitive permissions!");
+        }
+    });
+
+    document.getElementById("totalApps").innerText = apps.length;
+    document.getElementById("highRisk").innerText = high;
+    document.getElementById("mediumRisk").innerText = medium;
+    document.getElementById("lowRisk").innerText = low;
+}
+
+function addAlert(msg) {
+    let alerts = document.getElementById("alerts");
+    let li = document.createElement("li");
+    li.innerText = msg;
+    alerts.appendChild(li);
+}
+
+function unlockVault() {
+    let pass = document.getElementById("vaultPass").value;
+    if (pass === "1234") {
+        document.getElementById("vaultContent").classList.remove("hidden");
+        alert("Vault Unlocked!");
+    } else {
+        alert("Wrong Password!");
+    }
+}
+</script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.jss"></script>
+
+</body>
+</html>
